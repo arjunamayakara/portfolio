@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mallikarjuna Mayakara — Staff Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #080c10;
+  --bg2:     #0d1117;
+  --bg3:     #141b24;
+  --border:  #1c2530;
+  --border2: #243040;
+  --accent:  #38bdf8;
+  --gold:    #f59e0b;
+  --green:   #34d399;
+  --text:    #e2e8f0;
+  --text2:   #7d9ab5;
+  --text3:   #3d5166;
+  --sans:    'Sora', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(8,12,16,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.06em; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.66rem; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 3rem 5rem;
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.eyebrow::after { content: ''; display: block; width: 50px; height: 1px; background: var(--accent); opacity: 0.4; }
+.hero-name { font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 600; line-height: 1.1; margin-bottom: 0.4rem; }
+.hero-name span { color: var(--accent); }
+.hero-role { font-family: var(--mono); font-size: 0.82rem; color: var(--text2); letter-spacing: 0.06em; margin-bottom: 2rem; }
+.hero-summary { font-size: 0.97rem; color: var(--text2); max-width: 58ch; line-height: 1.9; margin-bottom: 2rem; }
+.hero-summary strong { color: var(--text); font-weight: 500; }
+.pills { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.5rem; }
+.pill {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.05em;
+  padding: 0.28rem 0.7rem; border: 1px solid var(--border2); color: var(--text2); border-radius: 2px;
+}
+.pill.hi { border-color: rgba(56,189,248,0.35); color: var(--accent); background: rgba(56,189,248,0.05); }
+.actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.07em;
+  text-decoration: none; padding: 0.65rem 1.4rem; border: 1px solid; transition: all 0.2s;
+}
+.btn-p { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 500; }
+.btn-p:hover { background: #0ea5e9; border-color: #0ea5e9; }
+.btn-g { background: transparent; color: var(--text2); border-color: var(--border2); }
+.btn-g:hover { border-color: var(--accent); color: var(--accent); }
+
+/* STATS */
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.stat { background: var(--bg2); padding: 1.5rem 2rem; text-align: center; transition: background 0.2s; }
+.stat:hover { background: var(--bg3); }
+.stat-n { font-family: var(--mono); font-size: 1.8rem; font-weight: 500; color: var(--accent); display: block; margin-bottom: 0.2rem; }
+.stat-l { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* WRAPPER + SECTION */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 3rem; position: relative; z-index: 1; }
+.sec { padding: 5rem 0; border-top: 1px solid var(--border); }
+.sec-eye { font-family: var(--mono); font-size: 0.63rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.sec-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; color: var(--text); margin-bottom: 2.5rem; line-height: 1.2; }
+
+/* ═══════════════════════════════════════════════
+   PROJECTS
+   To add a new project: copy one .proj-card block
+   and paste it below the existing one.
+   ═══════════════════════════════════════════════ */
+.projects { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.proj-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 2.5rem; position: relative; overflow: hidden; transition: border-color 0.2s;
+}
+.proj-card:hover { border-color: var(--border2); }
+.proj-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent 55%);
+}
+.proj-card.gold::before { background: linear-gradient(90deg, var(--gold), transparent 55%); }
+
+.proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.proj-name { font-size: 1.2rem; font-weight: 600; color: var(--text); }
+.badge {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 0.28rem 0.65rem; border: 1px solid; border-radius: 2px;
+}
+.badge-gold { border-color: rgba(245,158,11,0.45); color: var(--gold); background: rgba(245,158,11,0.06); }
+.badge-blue { border-color: rgba(56,189,248,0.35); color: var(--accent); background: rgba(56,189,248,0.05); }
+.badge-green { border-color: rgba(52,211,153,0.35); color: var(--green); background: rgba(52,211,153,0.05); }
+
+.proj-links { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.plink {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--text3);
+  text-decoration: none; border: 1px solid var(--border); padding: 0.22rem 0.55rem;
+  transition: all 0.2s; letter-spacing: 0.05em;
+}
+.plink:hover { color: var(--accent); border-color: var(--accent); }
+
+.proj-desc { font-size: 0.87rem; color: var(--text2); margin-bottom: 1.4rem; line-height: 1.8; max-width: 68ch; }
+
+.proj-points { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.4rem; }
+.proj-point { display: flex; gap: 0.7rem; font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+.proj-point::before { content: '→'; color: var(--accent); font-family: var(--mono); font-size: 0.7rem; margin-top: 0.15rem; flex-shrink: 0; }
+
+.stack { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.stag { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--text3); background: var(--bg); }
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.sg { background: var(--bg2); padding: 1.75rem; }
+.sg-name { font-family: var(--mono); font-size: 0.61rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+.sg-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.sg-list li { font-size: 0.82rem; color: var(--text2); display: flex; align-items: center; gap: 0.6rem; }
+.sg-list li::before { content: ''; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; opacity: 0.6; flex-shrink: 0; }
+
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.exp-item { background: var(--bg2); padding: 2rem 2.5rem; display: grid; grid-template-columns: 190px 1fr; gap: 2rem; transition: background 0.2s; }
+.exp-item:hover { background: var(--bg3); }
+.exp-period { font-family: var(--mono); font-size: 0.62rem; color: var(--text3); letter-spacing: 0.07em; margin-bottom: 0.35rem; }
+.exp-co { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); line-height: 1.5; }
+.exp-role { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 0.7rem; }
+.exp-pts { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.exp-pts li { font-size: 0.81rem; color: var(--text2); padding-left: 1rem; position: relative; line-height: 1.6; }
+.exp-pts li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; line-height: 1.35; }
+.exp-stack { margin-top: 0.65rem; font-family: var(--mono); font-size: 0.6rem; color: var(--text3); }
+.exp-stack span { color: var(--text2); }
+
+/* EDUCATION */
+.edu-block { margin-top: 1.5rem; padding: 1.5rem 2rem; background: var(--bg2); border: 1px solid var(--border); }
+.edu-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+.edu-degree { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+.edu-inst { font-family: var(--mono); font-size: 0.7rem; color: var(--text2); margin-top: 0.2rem; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.cc { background: var(--bg2); padding: 2rem 2.5rem; transition: background 0.2s; }
+.cc:hover { background: var(--bg3); }
+.cc-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+.cc-val { font-size: 0.92rem; color: var(--text); text-decoration: none; transition: color 0.2s; display: block; }
+.cc-val:hover { color: var(--accent); }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 1.75rem 3rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.ft { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); letter-spacing: 0.05em; }
+
+/* REVEAL */
+.r { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.r.on { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 6rem 1.5rem 4rem; }
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .wrap { padding: 0 1.5rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .contact-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+  .proj-card { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">mallikarjuna.mayakara // staff engineer</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero r">
+  <div class="eyebrow">Open to senior roles · Bengaluru, India</div>
+  <h1 class="hero-name">Mallikarjuna<br><span>Mayakara</span></h1>
+  <div class="hero-role">Staff Engineer &nbsp;·&nbsp; Distributed Systems &amp; AI-Native Platform Engineering</div>
+  <p class="hero-summary">
+    12 years designing and scaling <strong>cloud-native, high-throughput distributed systems</strong>
+    across EV, eCommerce, insurance, and telecom.
+    Deep in Java, Kafka, and low-latency data platforms — Aerospike, ScyllaDB, Redis.
+    Recently focused on <strong>AI-native backend architecture</strong>: integrating LLMs into
+    production systems as autonomous decision-making components, not chatbots.
+  </p>
+  <div class="pills">
+    <span class="pill hi">Java 8–21</span>
+    <span class="pill hi">Apache Kafka</span>
+    <span class="pill hi">LLM Integration</span>
+    <span class="pill hi">Kubernetes</span>
+    <span class="pill">Spring Boot</span>
+    <span class="pill">Aerospike</span>
+    <span class="pill">ScyllaDB</span>
+    <span class="pill">Redis</span>
+    <span class="pill">AWS / Azure</span>
+    <span class="pill">Resilience4j</span>
+    <span class="pill">LangChain4j</span>
+  </div>
+  <div class="actions">
+    <a href="#projects" class="btn btn-p">View Projects</a>
+    <a href="https://linkedin.com/in/mallikarjuna-mayakara-3378b78a" target="_blank" class="btn btn-g">LinkedIn</a>
+    <a href="https://github.com/arjunamayakara" target="_blank" class="btn btn-g">GitHub</a>
+    <a href="mailto:malliransou@gmail.com" class="btn btn-g">Email</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="wrap">
+  <div class="stats r">
+    <div class="stat"><span class="stat-n">12</span><span class="stat-l">Years experience</span></div>
+    <div class="stat"><span class="stat-n">200K</span><span class="stat-l">Requests / minute</span></div>
+    <div class="stat"><span class="stat-n">20+</span><span class="stat-l">Microservices modernized</span></div>
+    <div class="stat"><span class="stat-n">30%</span><span class="stat-l">Cost cut via DB migration</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PROJECTS SECTION
+     Adding a new project is simple:
+     1. Copy one entire <div class="proj-card"> block
+     2. Paste it after the last closing </div> of the existing card
+     3. Update the content inside
+     4. Change class to "proj-card gold" or "proj-card" as preferred
+     ═══════════════════════════════════════════════════════════ -->
+<div class="wrap">
+  <div class="sec" id="projects">
+    <div class="sec-eye">Portfolio</div>
+    <h2 class="sec-title">Projects</h2>
+    <div class="projects">
+
+      <!-- ── PROJECT 1 ─────────────────────────────────────── -->
+      <div class="proj-card gold r">
+        <div class="proj-top">
+          <div class="proj-name">AI-Powered Incident Response Platform</div>
+          <div class="badge badge-gold">AI · Distributed Systems</div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/arjunamayakara/ai-incident-platform" target="_blank" class="plink">GitHub →</a>
+          <a href="https://github.com/arjunamayakara/ai-incident-platform/blob/main/DEEP_DIVE.md" target="_blank" class="plink">Deep Dive →</a>
+        </div>
+        <p class="proj-desc">
+          Built to close the gap between a monitoring alert firing and a remediation action being taken —
+          without a human in the loop for failure patterns the system already knows.
+          Grafana and PagerDuty tell you something is wrong. This platform figures out why and fixes it.
+          The differentiator: team runbooks and past incident history are injected into the LLM prompt
+          so it reasons with your operational knowledge, not generic SRE patterns.
+        </p>
+        <div class="proj-points">
+          <div class="proj-point">Event-driven pipeline — 5,000+ metric events/min via Kafka (3 partitions, idempotent producer). Redis deduplication with 2-min window prevents alert storms.</div>
+          <div class="proj-point">Mistral LLM via LangChain4j diagnoses root cause from structured prompt. Runbooks and past incidents injected as context on every call — context-aware AI, not generic advice.</div>
+          <div class="proj-point">Auto-remediates: SCALE_UP, RESTART_POD, ROLLBACK, ALERT_TEAM, INVESTIGATE. Real Slack notifications with AI root cause embedded in every alert.</div>
+          <div class="proj-point">Prometheus Alertmanager webhook integration — connecting to a real monitoring stack is a config change, not a code change.</div>
+          <div class="proj-point">Same codebase ships as a single JAR (monolith) or 4 independent microservices. No code changes to switch.</div>
+          <div class="proj-point">LLM provider abstracted via LangChain4j — swap Mistral for GPT-4 in one line of config. Everything else stays unchanged.</div>
+        </div>
+        <div class="stack">
+          <span class="stag">Java 17</span><span class="stag">Spring Boot 3.2</span><span class="stag">Apache Kafka</span>
+          <span class="stag">Redis</span><span class="stag">LangChain4j</span><span class="stag">Mistral / Ollama</span>
+          <span class="stag">Slack API</span><span class="stag">Prometheus</span><span class="stag">Docker Compose</span><span class="stag">JUnit 5</span>
+        </div>
+      </div>
+
+      <!-- ── PROJECT 2 — copy this block and fill it in ─────
+      <div class="proj-card r">
+        <div class="proj-top">
+          <div class="proj-name">Your Next Project Title</div>
+          <div class="badge badge-blue">Category</div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/arjunamayakara/YOUR_REPO" target="_blank" class="plink">GitHub →</a>
+        </div>
+        <p class="proj-desc">
+          One or two sentences — what does this project do and what problem does it solve?
+        </p>
+        <div class="proj-points">
+          <div class="proj-point">Key engineering decision 1</div>
+          <div class="proj-point">Key engineering decision 2</div>
+          <div class="proj-point">Key engineering decision 3</div>
+        </div>
+        <div class="stack">
+          <span class="stag">Tech 1</span>
+          <span class="stag">Tech 2</span>
+          <span class="stag">Tech 3</span>
+        </div>
+      </div>
+      ── end project 2 ────────────────────────────────── -->
+
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="wrap">
+  <div class="sec" id="skills">
+    <div class="sec-eye">Expertise</div>
+    <h2 class="sec-title">Core Skills</h2>
+    <div class="skills-grid r">
+      <div class="sg">
+        <div class="sg-name">Languages &amp; Frameworks</div>
+        <ul class="sg-list">
+          <li>Java 8 / 11 / 17 / 21</li>
+          <li>Spring Boot, Spring Cloud</li>
+          <li>REST APIs, Feign</li>
+          <li>LangChain4j</li>
+          <li>JUnit 5, Mockito</li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="sg-name">Distributed Systems</div>
+        <ul class="sg-list">
+          <li>Apache Kafka</li>
+          <li>Event-Driven Architecture</li>
+          <li>High-Throughput Pipelines</li>
+          <li>Resilience4j</li>
+          <li>Circuit Breakers &amp; Rate Limiting</li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="sg-name">AI &amp; LLM Integration</div>
+        <ul class="sg-list">
+          <li>LangChain4j</li>
+          <li>Mistral / Ollama</li>
+          <li>OpenAI API</li>
+          <li>Prompt Engineering</li>
+          <li>RAG Patterns</li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="sg-name">Databases &amp; Cache</div>
+        <ul class="sg-list">
+          <li>Aerospike</li>
+          <li>ScyllaDB</li>
+          <li>Redis</li>
+          <li>MongoDB</li>
+          <li>MySQL / Oracle</li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="sg-name">Cloud &amp; DevOps</div>
+        <ul class="sg-list">
+          <li>AWS, Azure</li>
+          <li>Kubernetes, Docker</li>
+          <li>Jenkins, CI/CD</li>
+          <li>Cloud Migration (zero downtime)</li>
+          <li>Grafana, ELK, New Relic</li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="sg-name">Security &amp; Reliability</div>
+        <ul class="sg-list">
+          <li>OAuth2, RBAC</li>
+          <li>Secure API Design</li>
+          <li>Load Balancing</li>
+          <li>Payload Compression</li>
+          <li>Zero-downtime Migrations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="wrap">
+  <div class="sec" id="experience">
+    <div class="sec-eye">Background</div>
+    <h2 class="sec-title">Experience</h2>
+    <div class="exp-list r">
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Aug 2024 — Dec 2025</div>
+          <div class="exp-co">Tarento Technologies<br>Client: Ola Electric</div>
+        </div>
+        <div>
+          <div class="exp-role">Associate Architect — Senior Java Backend Lead</div>
+          <ul class="exp-pts">
+            <li>Led architecture and hands-on development of high-throughput backend systems handling ~200K requests/minute for real-time EV and mobility operations</li>
+            <li>Designed and built Road Trip feature end-to-end — real-time group location tracking, user invite system, and multi-coordinate trip planning between scooter users</li>
+            <li>Designed and built Tech Pack feature — APIs to selectively enable/disable scooter features based on purchased pack, coordinating across CApp, Scooter, and Order Management teams</li>
+            <li>Drove Java 8 → 17 modernization across 20+ microservices, improving startup time by ~35% and reducing memory footprint</li>
+            <li>Designed and executed cloud migration (AWS → KCS Cloud) with zero production downtime</li>
+            <li>Migrated critical workloads from ScyllaDB to Aerospike — ~30% compute cost reduction, improved read latency</li>
+            <li>Implemented payload compression strategies reducing average payload size by ~50%</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java 17, Spring Boot, Kubernetes, Aerospike, ScyllaDB, MongoDB</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Apr 2024 — Aug 2024</div>
+          <div class="exp-co">Grid Dynamics<br>Client: Tractor Supply Co.</div>
+        </div>
+        <div>
+          <div class="exp-role">Staff Software Engineer — Backend / Distributed Systems</div>
+          <ul class="exp-pts">
+            <li>Designed and built scalable backend services integrating with Bloomreach Search for high-traffic eCommerce workloads</li>
+            <li>Implemented resilience patterns using Resilience4j — rate limiting, retries, circuit breakers — improving stability under peak load</li>
+            <li>Designed distributed caching strategies to consistently meet strict SLA latency requirements</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, Spring Boot, Resilience4j, Redis</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Apr 2020 — Apr 2024</div>
+          <div class="exp-co">DXC Technology<br>Client: Guardian Life Insurance</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Software Developer / Tech Lead</div>
+          <ul class="exp-pts">
+            <li>Led design and development of an insurance claims processing platform on Spring Boot microservices</li>
+            <li>Built Kafka-based event-driven pipelines for data ingestion and async processing</li>
+            <li>Built reusable Feign client libraries standardizing inter-service communication across teams</li>
+            <li>Deployed on Kubernetes with Azure CI/CD pipelines; implemented OAuth2-based API security</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, Spring Boot, Kafka, Kubernetes, Azure, OAuth2</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Jul 2018 — Apr 2020</div>
+          <div class="exp-co">Infinite Computer Solutions<br>Client: Nokia</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Software Engineer</div>
+          <ul class="exp-pts">
+            <li>Developed backend orchestration services for large-scale firmware upgrade automation in telecom environments</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, Spring Boot, REST</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Jan 2017 — Jul 2018</div>
+          <div class="exp-co">Tech Mahindra<br>Client: Singtel</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Software Engineer</div>
+          <ul class="exp-pts">
+            <li>Developed RESTful services for high-volume SMS platforms; routing and transformation logic using Apache Camel and JBoss Fuse</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, Spring Boot, Apache Camel, JBoss Fuse</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Jul 2015 — Nov 2016</div>
+          <div class="exp-co">Accenture<br>Client: Credit Suisse</div>
+        </div>
+        <div>
+          <div class="exp-role">Software Engineer</div>
+          <ul class="exp-pts">
+            <li>Built REST APIs for front-office systems integrating with legacy SOAP services for global financial teams</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, REST, SOAP</span></div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-period">Jul 2013 — Jul 2015</div>
+          <div class="exp-co">DTDC Courier &amp; Cargo</div>
+        </div>
+        <div>
+          <div class="exp-role">Software Engineer</div>
+          <ul class="exp-pts">
+            <li>Developed REST/SOAP services, batch jobs, and reporting modules for logistics and mobile applications</li>
+          </ul>
+          <div class="exp-stack">Stack: <span>Java, REST, SOAP, Spring Batch</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="edu-block">
+      <div class="edu-label">Education</div>
+      <div class="edu-degree">Bachelor of Engineering — Computer Science</div>
+      <div class="edu-inst">Atria Institute of Technology, Bengaluru</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="wrap">
+  <div class="sec" id="contact">
+    <div class="sec-eye">Get in Touch</div>
+    <h2 class="sec-title">Contact</h2>
+    <div class="contact-grid r">
+      <div class="cc"><div class="cc-label">Email</div><a href="mailto:malliransou@gmail.com" class="cc-val">malliransou@gmail.com</a></div>
+      <div class="cc"><div class="cc-label">Phone</div><a href="tel:+918105535432" class="cc-val">+91 81055 35432</a></div>
+      <div class="cc"><div class="cc-label">LinkedIn</div><a href="https://linkedin.com/in/mallikarjuna-mayakara-3378b78a" target="_blank" class="cc-val">mallikarjuna-mayakara-3378b78a</a></div>
+      <div class="cc"><div class="cc-label">GitHub</div><a href="https://github.com/arjunamayakara" target="_blank" class="cc-val">github.com/arjunamayakara</a></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft">Mallikarjuna Mayakara — Staff Engineer, Bengaluru</div>
+  <div class="ft">Hosted free on GitHub Pages</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.r').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.035}s`;
+    obs.observe(el);
+  });
+
+  // hero visible on load
+  document.querySelector('.hero').classList.add('on');
+</script>
+</body>
+</html>
